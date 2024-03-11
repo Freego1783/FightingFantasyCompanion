@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "FightingFantasyCompanion",
   "resources": {
-    "hash": "sha256-Ml9JOWU8co+4lgrMPgzehCPIr30b/OVA62HFlJYUhBI=",
+    "hash": "sha256-tY75zR7sMwSNSA1MIfp06XhmsyjmiUtbl9HhGUR/wTA=",
     "jsModuleNative": {
       "dotnet.native.8.0.2.jgt5nhn140.js": "sha256-gPMK16QWoJSTxorlZJqcVtbBRTniIQWlLsJN2O4cJHg="
     },
@@ -17,7 +17,7 @@
       "icudt_no_CJK.dat": "sha256-L7sV7NEYP37/Qr2FPCePo5cJqRgTXRwGHuwF5Q+0Nfs="
     },
     "assembly": {
-      "FightingFantasyCompanion.wasm": "sha256-piBRazNs57eihpg20M8FtS3mgbP3Y1fOwd6+8oCEp7g=",
+      "FightingFantasyCompanion.wasm": "sha256-tpzIFsDWJTLgkf6z2CEMQIa2WiNTcEdEjBNaXRLjz58=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-uZZf7A1Oo8qFCccARSMF7k7JPV6aXdN6tl8kMG8/H34=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-ESeU/u2rFlzdb3vhXedFLSocPsBwvDq1SU3Nw/6Zal4=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-+DIyvDameI68zZEg9ovK068ylRZ1O0AiCOxWAXPzW60=",
