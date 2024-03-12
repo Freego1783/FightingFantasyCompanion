@@ -1,5 +1,7 @@
 # Blazor WASM Learning Repository - Fighting Fantasy Gamebook Companion App
 
+Bonsoiiiiiir...
+
 This repository serves as a playground for exploring the capabilities of Blazor WASM while creating a fun and engaging companion app for interactive fiction books, specifically the "Fighting Fantasy" gamebook series.
 
 ## Features (planned)
