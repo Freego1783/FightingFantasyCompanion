@@ -1,8 +1,45 @@
-﻿@page "/"
+﻿@using FightingFantasyCompanion.Shared.Models
+@using System.Text.Json
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@page "/"
 
 <div>
-    <h1>Hello, world!</h1>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateNewAdventure">New Adventure</MudButton>
 
-    Welcome to your new app.
-    <TestComponent/>
+    @foreach (AdventureSheet adventureSheet in _Adventures)
+    {
+        <p>@adventureSheet.Id</p>
+    }
 </div>
+
+@code{
+
+    private List<AdventureSheet> _Adventures=new List<AdventureSheet>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshAdventures();
+    }
+
+    private async Task RefreshAdventures()
+    {
+        _Adventures.Clear();
+
+        var keys = await localStorage.KeysAsync();
+        foreach (var key in keys)
+        {
+            string? json = await localStorage.GetItemAsync<string>(key);
+            if (!string.IsNullOrEmpty(json))
+            {
+                AdventureSheet? adventure = JsonSerializer.Deserialize<AdventureSheet>(json);
+                if (adventure != null) _Adventures.Add(adventure);
+            }
+        }
+    }
+
+    private async void CreateNewAdventure(){
+        AdventureSheet adventureSheet = new AdventureSheet();
+        await localStorage.SetItemAsync(adventureSheet.Id, JsonSerializer.Serialize(adventureSheet));
+        await RefreshAdventures();
+    }
+}
