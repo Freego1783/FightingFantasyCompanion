@@ -2,9 +2,11 @@
 
 namespace FightingFantasyCompanion.Shared.Models
 {
-    public class AdventureSheet
+    public class Adventure
     {
         public string Id { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime LastModificationDate { get; set; }
         public BookName Bookname { get;set; }
         public int InitialSkill { get; set; }
         public int Skill { get; set; }
@@ -15,9 +17,11 @@ namespace FightingFantasyCompanion.Shared.Models
         public int Gold { get;set; }
         public int Provisions { get; set; }
 
-        public AdventureSheet()
+        public Adventure()
         {
             Id = Guid.NewGuid().ToString();
+            CreationDate= DateTime.Now;
+            LastModificationDate= DateTime.Now;
         }
     }
 }

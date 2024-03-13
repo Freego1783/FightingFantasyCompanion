@@ -1,20 +1,27 @@
 ﻿@using FightingFantasyCompanion.Shared.Models
+@using FightingFantasyCompanion.Shared.Services
 @using System.Text.Json
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject IAdventureService adventureService
 @page "/"
 
 <div>
     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateNewAdventure">New Adventure</MudButton>
 
-    @foreach (AdventureSheet adventureSheet in _Adventures)
-    {
-        <p>@adventureSheet.Id</p>
-    }
+<MudContainer MaxWidth="MaxWidth.False" Class="mt-3">
+    <MudGrid>
+            @foreach (var adventure in _Adventures)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <AdventureListItem Adventure="adventure" />
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
 </div>
 
 @code{
 
-    private List<AdventureSheet> _Adventures=new List<AdventureSheet>();
+    private List<Adventure> _Adventures=new List<Adventure>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -24,22 +31,12 @@
     private async Task RefreshAdventures()
     {
         _Adventures.Clear();
-
-        var keys = await localStorage.KeysAsync();
-        foreach (var key in keys)
-        {
-            string? json = await localStorage.GetItemAsync<string>(key);
-            if (!string.IsNullOrEmpty(json))
-            {
-                AdventureSheet? adventure = JsonSerializer.Deserialize<AdventureSheet>(json);
-                if (adventure != null) _Adventures.Add(adventure);
-            }
-        }
+        _Adventures.AddRange(await adventureService.GetAll());
     }
 
-    private async void CreateNewAdventure(){
-        AdventureSheet adventureSheet = new AdventureSheet();
-        await localStorage.SetItemAsync(adventureSheet.Id, JsonSerializer.Serialize(adventureSheet));
+    private async Task CreateNewAdventure(){
+        Adventure adventure = new Adventure();
+        await adventureService.SaveAdventure(adventure);
         await RefreshAdventures();
     }
 }

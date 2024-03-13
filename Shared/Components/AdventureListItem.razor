@@ -1,0 +1,22 @@
+﻿@using FightingFantasyCompanion.Shared.Models
+
+<MudPaper Class="pa-2" Elevation="3">
+    <MudText Typo="Typo.body1">@Adventure.Bookname</MudText>
+    <MudText Typo="Typo.body1">
+        <MudIcon Icon="@Icons.Material.Filled.FitnessCenter"  Class="mr-1"/>
+        @Adventure.InitialSkill
+    </MudText>
+    <MudText Typo="Typo.body1">
+        <MudIcon Icon="@Icons.Material.Filled.HealthAndSafety" Class="mr-1" />
+        @Adventure.InitialStamina
+    </MudText>
+    <MudText Typo="Typo.body1">
+        <MudIcon Icon="@Icons.Material.Filled.Star" Class="mr-1" />
+        @Adventure.InitialLuck
+    </MudText>
+</MudPaper>
+
+@code {
+    [Parameter]
+    public Adventure Adventure { get; set; } = new Adventure();
+}
