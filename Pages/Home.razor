@@ -2,26 +2,27 @@
 @using FightingFantasyCompanion.Shared.Services
 @using System.Text.Json
 @inject IAdventureService adventureService
+@inject IDialogService DialogService
 @page "/"
 
 <div>
     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateNewAdventure">New Adventure</MudButton>
 
-<MudContainer MaxWidth="MaxWidth.False" Class="mt-3">
-    <MudGrid>
+    <MudContainer MaxWidth="MaxWidth.False" Class="mt-3">
+        <MudGrid>
             @foreach (var adventure in _Adventures)
-        {
-            <MudItem xs="12" sm="6" md="4" lg="3">
-                <AdventureListItem Adventure="adventure" />
-            </MudItem>
-        }
-    </MudGrid>
-</MudContainer>
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <AdventureListItem Adventure="adventure" />
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
 </div>
 
-@code{
+@code {
 
-    private List<Adventure> _Adventures=new List<Adventure>();
+    private List<Adventure> _Adventures = new List<Adventure>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,9 +35,12 @@
         _Adventures.AddRange(await adventureService.GetAll());
     }
 
-    private async Task CreateNewAdventure(){
-        Adventure adventure = new Adventure();
-        await adventureService.SaveAdventure(adventure);
-        await RefreshAdventures();
+    private async Task CreateNewAdventure()
+    {
+        var dialog = await DialogService.ShowAsync<NewAdventureDialog>();
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+            await RefreshAdventures();
     }
 }

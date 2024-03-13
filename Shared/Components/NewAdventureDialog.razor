@@ -1,0 +1,43 @@
+﻿@using FightingFantasyCompanion.Shared.Enums
+@using FightingFantasyCompanion.Shared.Models
+@using FightingFantasyCompanion.Shared.Services
+@inject IAdventureService adventureService
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            New Adventure
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm Model="@adventure">
+            <MudSelect Label="Book" T="BookName" @bind-Value="adventure.Bookname">
+                @foreach (BookName bookName in Enum.GetValues(typeof(BookName)))
+                {
+                    <MudSelectItem T="BookName" Value="@bookName">@bookName.ToString()</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Error" OnClick="CreateNewAdventure">Create</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    Adventure adventure = new Adventure();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task CreateNewAdventure()
+    {
+        await adventureService.SaveAdventure(adventure);
+        MudDialog.Close(DialogResult.Ok(adventure));
+    }
+}
