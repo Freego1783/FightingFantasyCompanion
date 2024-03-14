@@ -1,0 +1,28 @@
+﻿@using FightingFantasyCompanion.Shared.Enums
+
+<MudPaper Class="pa-16 ma-2" Outlined="true">
+    <div class="d-flex align center justify-center flex-grow-1">
+        <MudIcon Icon="@GetStatIcon()" Size="Size.Large" />
+        <MudText Typo="Typo.h5">
+            @statValue
+        </MudText>
+    </div>
+</MudPaper>
+
+
+@code {
+    [Parameter] public StatType statType { get; set; }
+    [Parameter] public int statValue { get; set; }
+
+    private string GetStatIcon()
+    {
+        return statType switch
+        {
+            StatType.SKILL => Icons.Material.Filled.FitnessCenter,
+            StatType.STAMINA => Icons.Material.Filled.HealthAndSafety,
+            StatType.LUCK => Icons.Material.Filled.Star,
+            _ => throw new ArgumentOutOfRangeException(nameof(statType), statType, null)
+        };
+    }
+
+}
