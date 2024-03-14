@@ -8,5 +8,6 @@ namespace FightingFantasyCompanion.Shared.Services
         Task<Adventure?> GetById(string Id);
         Task DeleteAdventure(string Id);
         Task SaveAdventure(Adventure adventure);
+        Adventure CreateAdventure();
     }
 }

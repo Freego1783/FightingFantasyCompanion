@@ -27,8 +27,7 @@
 
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
-
-    Adventure adventure = new Adventure();
+    [Parameter] public Adventure adventure { get; set; } = new Adventure();
 
     private void Cancel()
     {

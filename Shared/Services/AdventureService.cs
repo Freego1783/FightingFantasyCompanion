@@ -52,5 +52,41 @@ namespace FightingFantasyCompanion.Shared.Services
             adventure.LastModificationDate = DateTime.Now;
             await _localStorageService.SetItemAsync(adventure.Id, JsonSerializer.Serialize(adventure));
         }
+
+        public Adventure CreateAdventure()
+        {
+            Adventure adventure = new Adventure();
+
+            SetInitialValues(adventure);
+
+            return adventure;
+        }
+
+        private void SetInitialValues(Adventure adventure)
+        {
+            int skill = RollD6(1) + 6;
+            int luck = RollD6(1) + 6;
+            int stamina = RollD6(2) + 12;
+
+            adventure.InitialSkill = skill;
+            adventure.Skill = skill;
+            adventure.InitialLuck = luck;
+            adventure.Luck = luck;
+            adventure.InitialStamina = stamina;
+            adventure.Stamina = stamina;
+        }
+
+        private int RollD6(int amountOfDice)
+        {
+            Random random = new Random();
+            int result = 0;
+
+            for (int i = 0; i < amountOfDice; i++)
+            {
+                result += random.Next(1, 7);
+            }
+
+            return result;
+        }
     }
 }

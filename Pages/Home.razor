@@ -37,7 +37,9 @@
 
     private async Task CreateNewAdventure()
     {
-        var dialog = await DialogService.ShowAsync<NewAdventureDialog>();
+        Adventure adventure = adventureService.CreateAdventure();
+        var parameters = new DialogParameters<NewAdventureDialog> { { x => x.adventure,adventure } };
+        var dialog = await DialogService.ShowAsync<NewAdventureDialog>("",parameters);
         var result = await dialog.Result;
 
         if (!result.Canceled)
