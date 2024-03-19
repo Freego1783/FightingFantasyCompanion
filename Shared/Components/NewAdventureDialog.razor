@@ -18,9 +18,7 @@
                 }
             </MudSelect>
             <div class="d-flex gap-4">
-                <StatDisplay statType="StatType.SKILL" statValue="@adventure.InitialSkill" />
-                <StatDisplay statType="StatType.STAMINA" statValue="@adventure.InitialStamina" />
-                <StatDisplay statType="StatType.LUCK" statValue="@adventure.InitialLuck" />
+
             </div>
             <div class="d-flex gap-4">
                 <MudNumericField HideSpinButtons="true" @bind-Value="adventure.Gold" Label="Gold" Variant="Variant.Filled" Min="0" class="flex-grow-1" />

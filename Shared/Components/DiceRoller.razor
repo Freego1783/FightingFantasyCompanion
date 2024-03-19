@@ -1,0 +1,99 @@
+﻿<div class="dice-roll-container">
+    <MudButton Variant="Variant.Filled" StartIcon="fas fa-dice" Color="Color.Primary" OnClick="RollDice">Roll</MudButton>
+    <div class="dice-rolls">
+        @if (IsRollingDice)
+        {
+
+            @foreach (var dice in DiceIcons)
+            {
+                <i class="@dice"></i>
+            }
+        }
+        else if (Result > 0)
+        {
+            @Result
+        }
+        else
+        {
+           <span></span>
+        }
+    </div>
+
+</div>
+
+
+@code {
+    [Parameter]
+    public int DiceCount { get; set; } = 2;
+    [Parameter]
+    public EventCallback<int> OnRolled { get; set; }
+
+    private List<string> DiceIcons { get; set; } = new List<string>();
+    private bool IsRollingDice { get; set; } = false;
+    private Random random = new Random();
+    private int Result { get; set; }
+
+    private string GetDiceValue(int value)
+    {
+        switch (value)
+        {
+            case 1:
+                return "one";
+            case 2:
+                return "two";
+            case 3:
+                return "three";
+            case 4:
+                return "four";
+            case 5:
+                return "five";
+            case 6:
+                return "six";
+            default:
+                return "";
+        }
+    }
+
+    private async Task RollDice()
+    {
+        IsRollingDice = true;
+        StateHasChanged();
+
+        for (int i = 0; i < 15; i++)
+        {
+            for (int j = 0; j < DiceCount; j++)
+            {
+                DiceIcons[j] = $"fas fa-dice-{GetDiceValue(random.Next(1, 7))}";
+            }
+            StateHasChanged();
+            await Task.Delay(200);
+        }
+
+        int sum = 0;
+        for (int j = 0; j < DiceCount; j++)
+        {
+            int diceValue = random.Next(1, 7);
+            DiceIcons[j] = $"fas fa-dice-{GetDiceValue(diceValue)}";
+            sum += diceValue;
+        }
+
+        Result = sum;
+        await OnRolled.InvokeAsync(Result);
+
+        // Hide the dice after the animation
+        await Task.Delay(1000);
+        IsRollingDice = false;
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        // Initialize the dice icons list with default values
+        for (int i = 0; i < DiceCount; i++)
+        {
+            DiceIcons.Add("fas fa-dice");
+        }
+
+        base.OnInitialized();
+    }
+}

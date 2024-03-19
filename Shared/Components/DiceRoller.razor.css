@@ -1,0 +1,14 @@
+﻿.dice-roll-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.dice-rolls {
+    padding: 12px;
+}
+
+    .dice-rolls > i {
+        margin-left: 8px;
+    }
